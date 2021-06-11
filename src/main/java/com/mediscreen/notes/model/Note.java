@@ -12,6 +12,12 @@ import java.time.LocalDate;
 public class Note {
 
     @Id
+    @GeneratedValue
+    private String _id;
+
+    //TODO id note utile ?
+    @Field(value = "id")
+    @GeneratedValue
     private String id;
 
     @Field(value = "textNote")
@@ -27,27 +33,19 @@ public class Note {
     public Note() {
     }
 
-    public Note(String id, String textNote, int patientId, LocalDate dateNote) {
+    public Note(String id, String textNote, Integer patientId, LocalDate dateNote) {
         this.id = id;
         this.textNote = textNote;
         this.patientId = patientId;
         this.dateNote = dateNote;
     }
 
-   /* public Note(String textNote, int patientId, LocalDate dateNote) {
-        this.textNote = textNote;
-        this.patientId = patientId;
-        this.dateNote = dateNote;
-    }*/
+    public String get_id() {
+        return _id;
+    }
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "id='" + id + '\'' +
-                ", textNote='" + textNote + '\'' +
-                ", patientId=" + patientId +
-                ", dateNote=" + dateNote +
-                '}';
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getId() {
@@ -80,5 +78,15 @@ public class Note {
 
     public void setDateNote(LocalDate dateNote) {
         this.dateNote = dateNote;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id='" + _id + '\'' +
+                ", textNote='" + textNote + '\'' +
+                ", patientId=" + patientId +
+                ", dateNote=" + dateNote +
+                '}';
     }
 }

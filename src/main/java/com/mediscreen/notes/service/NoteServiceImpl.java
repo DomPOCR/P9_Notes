@@ -33,4 +33,9 @@ public class NoteServiceImpl implements NoteService {
         return noteDao.findNoteByPatientId(patientId);
     }
 
+    @Override
+    public Note addNote(Note note) {
+        return noteDao.save(note);
+    }
+
 }

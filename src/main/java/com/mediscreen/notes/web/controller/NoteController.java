@@ -7,16 +7,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "*")
-@Controller
+@CrossOrigin(origins = "*")
+@RestController
 public class NoteController {
 
     // Pour le log4j2
@@ -42,9 +39,6 @@ public class NoteController {
 
        List<Note> noteList = noteService.findAll();
 
-        for (Note note : noteList) {
-            System.out.println(note);
-        }
        logger.info("patHistory/list : OK");
        return noteList;
 
@@ -52,6 +46,7 @@ public class NoteController {
 
     /*---------------------------  GET notes by id -----------------------------*/
 
+    //TODO not work
     @GetMapping(value = "/patHistory/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Note> getNote(@PathVariable("id") String id) throws NotFoundException {
@@ -61,16 +56,35 @@ public class NoteController {
             logger.warn("The note with id " + id + " does not exist");
             throw new NotFoundException("The note with id " + id + " does not exist");
         }
-        logger.info("patHistory/" + id + " : OK");
+        logger.info("patHistory/ " + id + " : OK");
         return resultNote;
     }
 
     /*---------------------------  GET note by patient id -----------------------------*/
 
+    /**
+     *
+     * @param patientId
+     * @return notes for patient id
+     * @throws NotFoundException
+     */
     @GetMapping(value = "/patHistoryPatient/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getPatientNoteByPatientId(@PathVariable("patientId") Integer patientId) throws NotFoundException {
 
-        return noteService.findNoteByPatientId(patientId);
+        List<Note> noteList = noteService.findNoteByPatientId(patientId);
+
+        logger.info("patHistoryPatient/ " + patientId + " :  OK");
+        return noteList;
     }
+
+    @PostMapping(value = "/patHistory/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Note addNote(@RequestBody Note note) {
+
+        Note noteAdded = noteService.addNote(note);
+        logger.info("patHistory/add " + noteAdded.getPatientId() + " :  OK");
+        return noteAdded;
+    }
+
 }

@@ -16,4 +16,6 @@ public interface NoteService {
     Optional<Note> findById(String id);
 
     List<Note> findNoteByPatientId(Integer patientId);
+
+    Note addNote(Note note);
 }
