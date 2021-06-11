@@ -1,10 +1,10 @@
-package com.mediscreen.p9_notes;
+package com.mediscreen.notes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class P9NotesApplicationTests {
+class NotesApplicationTests {
 
     @Test
     void contextLoads() {

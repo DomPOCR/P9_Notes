@@ -1,9 +1,11 @@
-package com.mediscreen.p9_notes.model;
+package com.mediscreen.notes.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
 import java.time.LocalDate;
 
 @Document(collection ="note")
@@ -12,9 +14,14 @@ public class Note {
     @Id
     private String id;
 
+    @Field(value = "textNote")
     private String textNote;
-    private int patientId;
+
+    @Field(value = "patientId")
+    private Integer patientId;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Field(value = "dateNote")
     private LocalDate dateNote ;
 
     public Note() {
@@ -27,11 +34,11 @@ public class Note {
         this.dateNote = dateNote;
     }
 
-    public Note(String textNote, int patientId, LocalDate dateNote) {
+   /* public Note(String textNote, int patientId, LocalDate dateNote) {
         this.textNote = textNote;
         this.patientId = patientId;
         this.dateNote = dateNote;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -59,11 +66,11 @@ public class Note {
         this.textNote = textNote;
     }
 
-    public int getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
