@@ -38,4 +38,14 @@ public class NoteServiceImpl implements NoteService {
         return noteDao.save(note);
     }
 
+    @Override
+    public Note updateNote(Note note) {
+        return noteDao.save(note);
+    }
+
+    @Override
+    public void deleteNote(String id) {
+        noteDao.deleteById(id);
+    }
+
 }

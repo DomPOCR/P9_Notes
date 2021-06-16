@@ -18,4 +18,8 @@ public interface NoteService {
     List<Note> findNoteByPatientId(Integer patientId);
 
     Note addNote(Note note);
+
+    Note updateNote(Note note);
+
+    void deleteNote(String id);
 }

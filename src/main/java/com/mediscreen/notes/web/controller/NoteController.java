@@ -46,7 +46,12 @@ public class NoteController {
 
     /*---------------------------  GET notes by id -----------------------------*/
 
-    //TODO not work
+    /**
+     *
+     * @param id
+     * @return note by id
+     * @throws NotFoundException
+     */
     @GetMapping(value = "/patHistory/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Note> getNote(@PathVariable("id") String id) throws NotFoundException {
@@ -56,7 +61,7 @@ public class NoteController {
             logger.warn("The note with id " + id + " does not exist");
             throw new NotFoundException("The note with id " + id + " does not exist");
         }
-        logger.info("patHistory/ " + id + " : OK");
+        logger.info("patHistory/  note with " + id + " : OK");
         return resultNote;
     }
 
@@ -78,13 +83,64 @@ public class NoteController {
         return noteList;
     }
 
+    /*---------------------------  Add note  -----------------------------*/
+
+    /**
+     *
+     * @param note
+     * @return note added
+     */
     @PostMapping(value = "/patHistory/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Note addNote(@RequestBody Note note) {
 
         Note noteAdded = noteService.addNote(note);
-        logger.info("patHistory/add " + noteAdded.getPatientId() + " :  OK");
+        logger.info("patHistory/add  note with " + noteAdded.getPatientId() + " :  OK");
         return noteAdded;
+    }
+
+    /*---------------------------  Update note  -----------------------------*/
+
+    /**
+     *
+     * @param note
+     * @return note updated
+     */
+
+    @PutMapping(value = "/patHistory/update")
+    @ResponseStatus(HttpStatus.OK)
+    public Note updateNote(@RequestBody Note note) {
+
+        Optional<Note> noteToUpdate = noteService.findById(note.getId());
+        if (!noteToUpdate.isPresent()) {
+            logger.error("patHistory/update note with " + note.getId() + " not found");
+            throw new NotFoundException("patHistory/update  note with " + note.getId() + " not found");
+        }
+        Note noteUpdated = noteService.updateNote(note);
+        logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
+        return noteUpdated;
+    }
+
+    /*---------------------------  Delete note -----------------------------*/
+
+    /**
+     *
+     * @param id
+     * @return note deleted
+     * @throws NotFoundException
+     */
+    @PostMapping(value = "/patHistory/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Note deleteNote(@PathVariable("id") String id) throws NotFoundException {
+
+        Optional<Note> noteToDelete = noteService.findById(id);
+        if (!noteToDelete.isPresent()) {
+            logger.error("patHistory/delete note with " + id + " not found");
+            throw new NotFoundException("patHistory/delete note with " + id + " not found");
+        }
+        noteService.deleteNote(id);
+        logger.info("patHistory/delete " + noteToDelete.toString() + " :  OK");
+        return noteToDelete.get();
     }
 
 }

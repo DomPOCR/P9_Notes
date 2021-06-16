@@ -13,11 +13,6 @@ public class Note {
 
     @Id
     @GeneratedValue
-    private String _id;
-
-    //TODO id note utile ?
-    @Field(value = "id")
-    @GeneratedValue
     private String id;
 
     @Field(value = "textNote")
@@ -40,13 +35,6 @@ public class Note {
         this.dateNote = dateNote;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String getId() {
         return id;
@@ -83,7 +71,7 @@ public class Note {
     @Override
     public String toString() {
         return "Note{" +
-                "id='" + _id + '\'' +
+                "id='" + id + '\'' +
                 ", textNote='" + textNote + '\'' +
                 ", patientId=" + patientId +
                 ", dateNote=" + dateNote +
