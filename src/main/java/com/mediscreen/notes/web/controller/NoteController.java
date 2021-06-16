@@ -107,14 +107,14 @@ public class NoteController {
      * @return note updated
      */
 
-    @PutMapping(value = "/patHistory/update")
+    @PutMapping(value = "/patHistory/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Note updateNote(@RequestBody Note note) {
+    public Note updateNote(@PathVariable("id") String id, @RequestBody Note note) {
 
-        Optional<Note> noteToUpdate = noteService.findById(note.getId());
+        Optional<Note> noteToUpdate = noteService.findById(id);
         if (!noteToUpdate.isPresent()) {
-            logger.error("patHistory/update note with " + note.getId() + " not found");
-            throw new NotFoundException("patHistory/update  note with " + note.getId() + " not found");
+            logger.error("patHistory/update note with " + id + " not found");
+            throw new NotFoundException("patHistory/update  note with " + id + " not found");
         }
         Note noteUpdated = noteService.updateNote(note);
         logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
