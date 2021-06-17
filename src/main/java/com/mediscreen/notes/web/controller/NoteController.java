@@ -73,13 +73,13 @@ public class NoteController {
      * @return notes for patient id
      * @throws NotFoundException
      */
-    @GetMapping(value = "/patHistoryPatient/{patientId}")
+    @GetMapping(value = "/patHistory/patient/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getPatientNoteByPatientId(@PathVariable("patientId") Integer patientId) throws NotFoundException {
 
         List<Note> noteList = noteService.findNoteByPatientId(patientId);
 
-        logger.info("patHistoryPatient/ " + patientId + " :  OK");
+        logger.info("patHistory/patient/ " + patientId + " :  OK");
         return noteList;
     }
 
