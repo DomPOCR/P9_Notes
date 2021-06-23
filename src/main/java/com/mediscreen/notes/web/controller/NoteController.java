@@ -21,10 +21,11 @@ public class NoteController {
 
     private final NoteService noteService;
 
-    @Autowired
     public NoteController(NoteService noteService) {
         this.noteService = noteService;
     }
+
+
 
 
     /*---------------------------  GET all notes -----------------------------*/
