@@ -40,7 +40,7 @@ public class NoteControllerTestIT {
 
     @BeforeEach
     public void setUpEach(){
-        noteTest=new Note("1",textNoteTest,1,dateNoteTest);
+        noteTest=new Note(textNoteTest,1,dateNoteTest);
     }
 
     /** List of notes **/
@@ -125,7 +125,7 @@ public class NoteControllerTestIT {
 
         //GIVEN
         noteBeforeDelete = noteService.findAll();
-        Optional<Note> noteToDelete = noteService.findById(noteBeforeDelete.get(1).getId());
+        Optional<Note> noteToDelete = noteService.findById(noteBeforeDelete.get(0).getId());
 
         // WHEN
         // THEN

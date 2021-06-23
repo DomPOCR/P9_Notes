@@ -35,6 +35,11 @@ public class Note {
         this.dateNote = dateNote;
     }
 
+    public Note(String textNote, Integer patientId, LocalDate dateNote) {
+        this.textNote = textNote;
+        this.patientId = patientId;
+        this.dateNote = dateNote;
+    }
 
     public String getId() {
         return id;
