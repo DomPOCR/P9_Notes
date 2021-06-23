@@ -16,10 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,6 +43,7 @@ public class NoteControllerTestIT {
         noteTest=new Note("1",textNoteTest,1,dateNoteTest);
     }
 
+    /** List of notes **/
     @Test
     public void listNotes() throws Exception {
 
@@ -53,9 +54,9 @@ public class NoteControllerTestIT {
 
     }
 
-
+    /** Add a note **/
     @Test
-    public void addCorrectNote() throws Exception {
+    public void addNote() throws Exception {
 
         List<Note> noteBeforeAdd;
         List<Note> noteAfterAdd;
@@ -64,7 +65,6 @@ public class NoteControllerTestIT {
         ObjectNode jsonUser = obm.createObjectNode();
 
         //GIVEN
-        /*jsonUser.set("id", TextNode.valueOf(noteTest.getId()));*/
         jsonUser.set("textNote", TextNode.valueOf(noteTest.getTextNote()));
         jsonUser.set("patientId", TextNode.valueOf(String.valueOf(noteTest.getPatientId())));
         jsonUser.set("dateNote", TextNode.valueOf(String.valueOf(noteTest.getDateNote())));
@@ -84,4 +84,58 @@ public class NoteControllerTestIT {
         assertEquals(noteAfterAdd.size(),noteBeforeAdd.size()+1);
     }
 
+    /** Update note **/
+    @Test
+    public void updateNote() throws Exception {
+
+        List<Note> noteBeforeUpdate;
+        List<Note> noteAfterUpdate;
+
+        ObjectMapper obm = new ObjectMapper();
+        ObjectNode jsonUser = obm.createObjectNode();
+
+        //GIVEN
+        noteBeforeUpdate = noteService.findAll();
+        Optional<Note> noteToUpdate = noteService.findById(noteBeforeUpdate.get(1).getId());
+
+        jsonUser.set("id", TextNode.valueOf(noteToUpdate.get().getId()));
+        jsonUser.set("textNote", TextNode.valueOf(noteToUpdate.get().getTextNote()));
+        jsonUser.set("patientId", TextNode.valueOf(String.valueOf(noteToUpdate.get().getPatientId())));
+        jsonUser.set("dateNote", TextNode.valueOf(String.valueOf(noteToUpdate.get().getDateNote())));
+
+        // WHEN
+        // THEN
+        mockMvc.perform(put("/patHistory/update/"+noteToUpdate.get().getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonUser.toString())
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        noteAfterUpdate = noteService.findAll();
+        assertEquals(noteAfterUpdate.size(),noteBeforeUpdate.size());
+    }
+
+    /**Delete note **/
+    @Test
+    public void deleteNote() throws Exception {
+
+        List<Note> noteBeforeDelete;
+        List<Note> noteAfterDelete;
+
+        //GIVEN
+        noteBeforeDelete = noteService.findAll();
+        Optional<Note> noteToDelete = noteService.findById(noteBeforeDelete.get(1).getId());
+
+        // WHEN
+        // THEN
+        mockMvc.perform(post("/patHistory/delete/"+noteToDelete.get().getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        noteAfterDelete = noteService.findAll();
+        assertEquals(noteAfterDelete.size(),noteBeforeDelete.size()-1);
+    }
 }
