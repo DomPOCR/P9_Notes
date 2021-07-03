@@ -58,7 +58,7 @@ public class NoteController {
     public Optional<Note> getNote(@PathVariable("id") String id) throws NotFoundException {
 
         Optional<Note> resultNote = noteService.findById(id);
-        if (!resultNote.isPresent()){
+        if (resultNote == null) {
             logger.warn("The note with id " + id + " does not exist");
             throw new NotFoundException("The note with id " + id + " does not exist");
         }
@@ -113,7 +113,7 @@ public class NoteController {
     public Note updateNote(@PathVariable("id") String id, @RequestBody Note note) {
 
         Optional<Note> noteToUpdate = noteService.findById(id);
-        if (!noteToUpdate.isPresent()) {
+        if (noteToUpdate == null) {
             logger.error("patHistory/update note with " + id + " not found");
             throw new NotFoundException("patHistory/update  note with " + id + " not found");
         }
@@ -135,7 +135,7 @@ public class NoteController {
     public Note deleteNote(@PathVariable("id") String id) throws NotFoundException {
 
         Optional<Note> noteToDelete = noteService.findById(id);
-        if (!noteToDelete.isPresent()) {
+        if (noteToDelete == null) {
             logger.error("patHistory/delete note with " + id + " not found");
             throw new NotFoundException("patHistory/delete note with " + id + " not found");
         }

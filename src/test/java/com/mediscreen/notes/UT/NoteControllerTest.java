@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -80,6 +81,38 @@ public class NoteControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void getNoteByIdTest_NotFound() throws Exception {
+
+        //GIVEN
+        Optional<Note> note = Optional.of(noteTest);
+
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(null);
+        //WHEN THEN
+        try {
+            mockMvc.perform(get("/patHistory/0")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andDo(print());
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains("The note with id 0 does not exist"));
+        }
+    }
+
+    @Test
+    public void getNoteByPatientIdTest() throws Exception {
+
+        //GIVEN
+        Optional<Note> note = Optional.of(noteTest);
+
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(note);
+        //WHEN THEN
+        mockMvc.perform(get("/patHistory/patient//1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
     @Test
     public void addNoteTest() throws Exception {
 

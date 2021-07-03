@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false) /*désactive tous les filtres dans la configuration SpringSecurity */
 @PropertySource("classpath:application.properties")
-public class NoteControllerTestIT {
+public class NoteControllerITTest {
 
     @Autowired
     private MockMvc mockMvc;
