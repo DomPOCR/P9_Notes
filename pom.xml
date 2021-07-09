@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mediscreen</groupId>
     <artifactId>P9_Notes</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>P9_Notes</name>
     <description>MEDISCREEN Micro-service NOTES</description>
     <!-- ******************************************************************* -->
@@ -121,7 +121,6 @@
     <!-- ******************************************************************* -->
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
