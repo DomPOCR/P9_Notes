@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.util.ResourceBundle;
 
 @Configuration
+@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Pour le log4j2
@@ -24,9 +26,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/").permitAll(); /* TODO DP  disable authentification*/
+                /*.authorizeRequests().anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic();*/
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)

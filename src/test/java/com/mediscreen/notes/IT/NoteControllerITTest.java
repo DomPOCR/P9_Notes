@@ -96,16 +96,16 @@ public class NoteControllerITTest {
 
         //GIVEN
         noteBeforeUpdate = noteService.findAll();
-        Optional<Note> noteToUpdate = noteService.findById(noteBeforeUpdate.get(1).getId());
+        Note noteToUpdate = noteService.findById(noteBeforeUpdate.get(1).getId());
 
-        jsonUser.set("id", TextNode.valueOf(noteToUpdate.get().getId()));
-        jsonUser.set("textNote", TextNode.valueOf(noteToUpdate.get().getTextNote()));
-        jsonUser.set("patientId", TextNode.valueOf(String.valueOf(noteToUpdate.get().getPatientId())));
-        jsonUser.set("dateNote", TextNode.valueOf(String.valueOf(noteToUpdate.get().getDateNote())));
+        jsonUser.set("id", TextNode.valueOf(noteToUpdate.getId()));
+        jsonUser.set("textNote", TextNode.valueOf(noteToUpdate.getTextNote()));
+        jsonUser.set("patientId", TextNode.valueOf(String.valueOf(noteToUpdate.getPatientId())));
+        jsonUser.set("dateNote", TextNode.valueOf(String.valueOf(noteToUpdate.getDateNote())));
 
         // WHEN
         // THEN
-        mockMvc.perform(put("/patHistory/update/"+noteToUpdate.get().getId())
+        mockMvc.perform(put("/patHistory/update/"+noteToUpdate.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser.toString())
                 .accept(MediaType.APPLICATION_JSON))
@@ -125,11 +125,11 @@ public class NoteControllerITTest {
 
         //GIVEN
         noteBeforeDelete = noteService.findAll();
-        Optional<Note> noteToDelete = noteService.findById(noteBeforeDelete.get(0).getId());
+        Note noteToDelete = noteService.findById(noteBeforeDelete.get(0).getId());
 
         // WHEN
         // THEN
-        mockMvc.perform(post("/patHistory/delete/"+noteToDelete.get().getId())
+        mockMvc.perform(post("/patHistory/delete/"+noteToDelete.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

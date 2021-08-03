@@ -3,6 +3,7 @@ package com.mediscreen.notes.web.controller;
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.service.NoteService;
 import com.mediscreen.notes.web.exception.NotFoundException;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 public class NoteController {
 
     // Pour le log4j2
@@ -55,15 +57,15 @@ public class NoteController {
      */
     @GetMapping(value = "/patHistory/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Note> getNote(@PathVariable("id") String id) throws NotFoundException {
+    public Note getNote(@PathVariable("id") String id) throws NotFoundException {
 
-        Optional<Note> resultNote = noteService.findById(id);
-        if (resultNote == null) {
-            logger.warn("The note with id " + id + " does not exist");
-            throw new NotFoundException("The note with id " + id + " does not exist");
+        try {
+            Note resultNote = noteService.findById(id);
+            logger.info("patHistory/  note with " + id + " : OK");
+            return resultNote;
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("The note with id " + id + " does not exist");
         }
-        logger.info("patHistory/  note with " + id + " : OK");
-        return resultNote;
     }
 
     /*---------------------------  GET note by patient id -----------------------------*/
@@ -110,16 +112,16 @@ public class NoteController {
 
     @PutMapping(value = "/patHistory/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Note updateNote(@PathVariable("id") String id, @RequestBody Note note) {
+    public Note updateNote(@PathVariable("id") String id, @RequestBody Note note) throws NotFoundException {
 
-        Optional<Note> noteToUpdate = noteService.findById(id);
-        if (noteToUpdate == null) {
-            logger.error("patHistory/update note with " + id + " not found");
-            throw new NotFoundException("patHistory/update  note with " + id + " not found");
+        try {
+            Note noteToUpdate = noteService.findById(id);
+            Note noteUpdated = noteService.updateNote(note);
+            logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
+            return noteUpdated;
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("patHistory/update  note with " + id + " not found");
         }
-        Note noteUpdated = noteService.updateNote(note);
-        logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
-        return noteUpdated;
     }
 
     /*---------------------------  Delete note -----------------------------*/
@@ -134,14 +136,15 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     public Note deleteNote(@PathVariable("id") String id) throws NotFoundException {
 
-        Optional<Note> noteToDelete = noteService.findById(id);
-        if (noteToDelete == null) {
-            logger.error("patHistory/delete note with " + id + " not found");
-            throw new NotFoundException("patHistory/delete note with " + id + " not found");
+        try {
+            Note noteToDelete = noteService.findById(id);
+            noteService.deleteNote(id);
+            logger.info("patHistory/delete " + noteToDelete.toString() + " :  OK");
+            return noteToDelete;
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("patHistory/delete  note with " + id + " not found");
         }
-        noteService.deleteNote(id);
-        logger.info("patHistory/delete " + noteToDelete.toString() + " :  OK");
-        return noteToDelete.get();
+
     }
 
 }

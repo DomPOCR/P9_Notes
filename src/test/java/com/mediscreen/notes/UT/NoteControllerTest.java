@@ -70,9 +70,9 @@ public class NoteControllerTest {
     public void getNoteByIdTest() throws Exception {
 
         //GIVEN
-        Optional<Note> note = Optional.of(noteTest);
+        //Note note = noteTest;
 
-        Mockito.when(noteService.findById(any(String.class))).thenReturn(note);
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(noteTest);
         //WHEN THEN
         mockMvc.perform(get("/patHistory/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,6 @@ public class NoteControllerTest {
     public void getNoteByIdTest_NotFound() throws Exception {
 
         //GIVEN
-        Optional<Note> note = Optional.of(noteTest);
 
         Mockito.when(noteService.findById(any(String.class))).thenReturn(null);
         //WHEN THEN
@@ -103,9 +102,9 @@ public class NoteControllerTest {
     public void getNoteByPatientIdTest() throws Exception {
 
         //GIVEN
-        Optional<Note> note = Optional.of(noteTest);
+//        Optional<Note> note = Optional.of(noteTest);
 
-        Mockito.when(noteService.findById(any(String.class))).thenReturn(note);
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(noteTest);
         //WHEN THEN
         mockMvc.perform(get("/patHistory/patient//1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -142,7 +141,7 @@ public class NoteControllerTest {
 
         ObjectMapper obm = new ObjectMapper();
         ObjectNode jsonUser = obm.createObjectNode();
-        Optional<Note> note = Optional.of(noteTest);
+      //  Note note = noteTest;
 
         //GIVEN
         jsonUser.set("id", TextNode.valueOf(noteTest.getId()));
@@ -150,7 +149,7 @@ public class NoteControllerTest {
         jsonUser.set("patientId", TextNode.valueOf(String.valueOf(noteTest.getPatientId())));
         jsonUser.set("dateNote", TextNode.valueOf(String.valueOf(noteTest.getDateNote())));
 
-        Mockito.when(noteService.findById(any(String.class))).thenReturn(note);
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(noteTest);
         Mockito.when(noteService.updateNote(any(Note.class))).thenReturn(noteTest);
 
         //WHEN THEN
@@ -165,11 +164,11 @@ public class NoteControllerTest {
     @Test
     public void deleteNoteTest() throws Exception {
 
-        Optional<Note> note = Optional.of(noteTest);
+        //Optional<Note> note = Optional.of(noteTest);
 
         //GIVEN
 
-        Mockito.when(noteService.findById(any(String.class))).thenReturn(note);
+        Mockito.when(noteService.findById(any(String.class))).thenReturn(noteTest);
         Mockito.doNothing().when(noteService).deleteNote(any(String.class));
 
         //WHEN THEN
