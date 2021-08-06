@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -24,8 +24,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Optional<Note> findById(String id) {
-        return noteDao.findById(id);
+    public Note findById(String id) throws NoSuchElementException {
+        return noteDao.findById(id).orElseThrow(() -> new NoSuchElementException("The note id : " + id + " does not exist"));
     }
 
     @Override

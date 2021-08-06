@@ -13,7 +13,7 @@ public interface NoteService {
      */
     List<Note> findAll();
 
-    Optional<Note> findById(String id);
+    Note findById(String id);
 
     List<Note> findNoteByPatientId(Integer patientId);
 
