@@ -70,7 +70,6 @@ public class NoteControllerTest {
     public void getNoteByIdTest() throws Exception {
 
         //GIVEN
-        //Note note = noteTest;
 
         Mockito.when(noteService.findById(any(String.class))).thenReturn(noteTest);
         //WHEN THEN
@@ -82,7 +81,7 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void getNoteByIdTest_NotFound() throws Exception {
+    public void getNoteById_NotFoundTest() throws Exception {
 
         //GIVEN
 

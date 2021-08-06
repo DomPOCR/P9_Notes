@@ -3,7 +3,6 @@ package com.mediscreen.notes.web.controller;
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.service.NoteService;
 import com.mediscreen.notes.web.exception.NotFoundException;
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,34 +21,33 @@ public class NoteController {
 
     private final NoteService noteService;
 
+    @Autowired
     public NoteController(NoteService noteService) {
         this.noteService = noteService;
     }
-
-
 
 
     /*---------------------------  GET all notes -----------------------------*/
 
     /**
      * Find all notes in database
+     *
      * @return list of notes
      */
     @GetMapping(value = "/patHistory/list")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getAllNote() {
 
-       List<Note> noteList = noteService.findAll();
+        List<Note> noteList = noteService.findAll();
 
-       logger.info("patHistory/list : OK");
-       return noteList;
+        logger.info("patHistory/list : OK");
+        return noteList;
 
     }
 
     /*---------------------------  GET notes by id -----------------------------*/
 
     /**
-     *
      * @param id
      * @return note by id
      * @throws NotFoundException
@@ -71,7 +68,6 @@ public class NoteController {
     /*---------------------------  GET note by patient id -----------------------------*/
 
     /**
-     *
      * @param patientId
      * @return notes for patient id
      * @throws NotFoundException
@@ -89,7 +85,6 @@ public class NoteController {
     /*---------------------------  Add note  -----------------------------*/
 
     /**
-     *
      * @param note
      * @return note added
      */
@@ -105,7 +100,6 @@ public class NoteController {
     /*---------------------------  Update note  -----------------------------*/
 
     /**
-     *
      * @param note
      * @return note updated
      */
@@ -116,18 +110,18 @@ public class NoteController {
 
         try {
             Note noteToUpdate = noteService.findById(id);
-            Note noteUpdated = noteService.updateNote(note);
-            logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
-            return noteUpdated;
+
         } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("patHistory/update  note with " + id + " not found");
         }
+        Note noteUpdated = noteService.updateNote(note);
+        logger.info("patHistory/update " + noteUpdated.toString() + " :  OK");
+        return noteUpdated;
     }
 
     /*---------------------------  Delete note -----------------------------*/
 
     /**
-     *
      * @param id
      * @return note deleted
      * @throws NotFoundException
