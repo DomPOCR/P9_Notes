@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "application.security.user.name",
+      "type": "java.lang.String",
+      "description": "Description for application.security.user.name."
+    },
+    {
+      "name": "application.security.user.name",
+      "type": "java.lang.String",
+      "description": "Description for application.security.user.name."
+    }
+  ] }

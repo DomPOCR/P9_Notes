@@ -26,10 +26,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     {
         http
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/").permitAll(); /* TODO DP  disable authentification*/
-                /*.authorizeRequests().anyRequest().authenticated()
+                /*.authorizeRequests().antMatchers("/") .permitAll(); TODO DP  disable authentification*/
+                .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .httpBasic();*/
+                .httpBasic();
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
