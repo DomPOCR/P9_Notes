@@ -43,6 +43,7 @@ public class NoteControllerITTest {
     }
 
     /** List of notes **/
+
     @Test
     public void listNotes() throws Exception {
 
@@ -116,6 +117,7 @@ public class NoteControllerITTest {
     }
 
     /**Delete note **/
+    
     @Test
     public void deleteNote() throws Exception {
 

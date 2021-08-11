@@ -9,7 +9,11 @@ import java.util.List;
 @Repository
 public interface NoteDao extends MongoRepository<Note, String> {
 
-
+    /**
+     *
+     * @param patientId patient id
+     * @return List of notes of patient
+     */
     List<Note> findNoteByPatientId (Integer patientId);
 
 }
