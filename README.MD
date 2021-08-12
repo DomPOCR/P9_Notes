@@ -1,6 +1,6 @@
-# MEDISCREEN APP: ASSESSMENT
+# MEDISCREEN APP: NOTES
 
-Micro-service assessment evaluate a level of risk (diabet) for a patient. This micro-service need patient and note to calculate the risk.
+Micro-service NOTES manage patients notes on MEDISCREEN Application.
 
 # Prerequisite to run
 - Java 1.8
@@ -18,10 +18,18 @@ Check Patient README.MD for global installation.
 - http://patient:8080
 
 ## URL 
-### Get Assessment by Patient Id
--   GET http://assessment:8083/assessment/id?id=PatientId
-### Get Assessment by Family Name
-- GET http://assessment:8083/assessment/familyname?familyName=name_of_family
+### Get All notes
+-   GET http://note:8082/patHistory/list
+### Get note by Id
+- GET http://note:8082/patHistory/id?id=noteId
+### Get note by patient Id
+- GET http://note:8082/patHistory/patient/id?id=PatientId
+### Add note
+- POST http://note:8082/patHistory/add
+### Update note
+- PUT http://note:8082/patHistory/update/id?id=noteId
+### Delete note
+- POST http://note:8082/patHistory/delete/id?id=noteId
 
 # Architecture
 ![Alt Text](/Archi.png)
